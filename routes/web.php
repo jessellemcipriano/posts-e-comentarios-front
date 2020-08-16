@@ -12,8 +12,13 @@
 */
 Auth::routes();
 
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::resource('post', 'PostController');
+Route::get('/Profile', 'ProfileController@index')->name('Profile');
 
-Route::resource('comentario', 'ComentarioController');
+//Route::resource('comentario', 'ComentarioController');
+
+Route::post('/post', 'PostController@store')->name('post.store');
+
+Route::post('/post/{id}/comentario', 'ComentarioController@store')->name('comentario.store');

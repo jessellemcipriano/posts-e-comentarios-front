@@ -15,6 +15,7 @@
             <div class="col-12">
                 <div class="card">
                     <form action="{{ route('post.store') }}" method="POST">
+                    @csrf
                         <div class="card-header">Criar nova postagem</div>
                         <div class="card-body">
                             <label for="conteudo">Postagem</label>
@@ -27,106 +28,73 @@
                 </div>
             </div>
         @endauth
-        <div class="col-md-6 col-12">
-            <div class="card">
-                <div class="card-header">Título da postagem</div>
-                <div class="card-body">
-                    <h5>Autor: <small>Nome do usuario</small></h5>
-                    <p>
-                        Texto com o conteúdo da postagem<br>
-                        Mussum Ipsum, cacilds vidis litro abertis. 
-                        Si num tem leite então bota uma pinga aí cumpadi! 
-                        Mais vale um bebadis conhecidiss, que um alcoolatra anonimis. 
-                        Atirei o pau no gatis, per gatis num morreus. 
-                        Mé faiz elementum girarzis, nisi eros vermeio. 
-                    </p>
-                    <hr>
-                    <a href="#comentarios-1" data-toggle="collapse" aria-expanded="false" aria-controls="comentarios-1">
-                        <small>
-                            comentários (2)
-                        </small>
-                    </a>
-                    <div class="my-2 comentarios collapse" id="comentarios-1">
-                        @comentario(["autor"=>"João lindão"])
-                            Mussum Ipsum, cacilds vidis litro abertis. Posuere libero varius.
-                            Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi.
-                            Aenean aliquam molestie leo, vitae iaculis nisl. Atirei o pau no gatis, per gatis num morreus.
-                            Si u mundo tá muito paradis? 
-                            Toma um mé que o mundo vai girarzis! 
-                        @endcomentario
-                        @comentario(['autor'=>'Mussum cacildis'])
-                            Mussum Ipsum, cacilds vidis litro abertis. 
-                            Per aumento de cachacis, eu reclamis. 
-                            Não sou faixa preta cumpadi, sou preto inteiris, inteiris. Praesent vel viverra nisi. 
-                            Mauris aliquet nunc non turpis scelerisque, eget. 
-                            Si num tem leite então bota uma pinga aí cumpadi!  
-                        @endcomentario
+        @guest
+        @if(count($Arposts)==0)
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body" align="center">                        
+                            <h5><b>Não há postagens. Entre e seja o primeiro!</b></h5>      
+                            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-chat-left-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v11.586l2-2A2 2 0 0 1 4.414 11H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+  <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+</svg>                  
                     </div>
-                    @auth
-                        <hr>
-                        <div>
-                            <form action="{{ route('comentario.store',1) }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="postagem" value="1">
-                                <div class="form-group">
-                                    <label for="comentario">Comentario</label>
-                                    <textarea name="comentario" id="comentario" class="form-control"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-sm">Salvar comentário</button>
-                            </form>
-                        </div>    
-                    @endauth
                 </div>
             </div>
-        </div>
-        <div class="col-md-6 col-12">
-            <div class="card">
-                <div class="card-header">Título da postagem</div>
+        @endif
+        @endguest
 
-                <div class="card-body">
-                    <p>
-                        Texto com o conteúdo da postagem<br>
-                        Mussum Ipsum, cacilds vidis litro abertis. Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose. Mé faiz elementum girarzis, nisi eros vermeio. Copo furadis é disculpa de bebadis, arcu quam euismod magna. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. 
-                    </p>
-                    <hr>
-                    <a href="#comentarios-2" data-toggle="collapse" aria-expanded="false" aria-controls="comentarios-2">
-                        <small>
-                            comentários (2)
-                        </small>
-                    </a>
-                    <div class="my-2 comentarios collapse" id="comentarios-2">
-                        @comentario(['autor'=>"Eu mesmo"])
-                            Mussum Ipsum, cacilds vidis litro abertis. 
-                            Cevadis im ampola pa arma uma pindureta. Per aumento de cachacis, eu reclamis. 
-                            Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi. 
-                            Mauris nec dolor in eros commodo tempor. 
-                            Aenean aliquam molestie leo, vitae iaculis nisl. 
-                        @endcomentario
-                        @comentario(['autor'=>"Outra pessoa"])
-                            Mussum Ipsum, cacilds vidis litro abertis. 
-                            Per aumento de cachacis, eu reclamis. 
-                            Não sou faixa preta cumpadi, sou preto inteiris, inteiris. Praesent vel viverra nisi. 
-                            Mauris aliquet nunc non turpis scelerisque, eget. 
-                            Si num tem leite então bota uma pinga aí cumpadi!
-                        @endcomentario
+        @auth 
+        @if(count($Arposts)==0)
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body" align="center">                        
+                            <h5><b>Não há postagens. Seja o primeiro!</b></h5>      
+                            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-chat-left-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v11.586l2-2A2 2 0 0 1 4.414 11H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+  <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+</svg>                  
                     </div>
-                    @auth
-                        <hr>
-                        <div>
-                            <form action="{{ route('comentario.store',1) }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="postagem" value="1">
-                                <div class="form-group">
-                                    <label for="comentario">Comentario</label>
-                                    <textarea name="comentario" id="comentario" class="form-control"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-sm">Salvar comentário</button>
-                            </form>
-                        </div>    
-                    @endauth
                 </div>
             </div>
+        @endif
+        @endauth
+
+
+
+
+
+
+        <div class="col-md-6 col-6">
+            @if(count($Arposts)!=0)
+                
+                    
+                @foreach($Arposts->split(2)[0] as $c)
+                    @component('components.post',['Arusuarios'=>$Arusuarios, 'post'=>$c, 'Arcomentarios'=>$Arcomentarios])                    
+                    @endcomponent
+
+                    </br>
+                   
+                    
+                @endforeach
+            @endif            
         </div>
+
+
+
+        <div class="col-md-6 col-6">
+            @if(count($Arposts) >= 2 )
+               
+                @foreach($Arposts->split(2)[1] as $c)
+                @component('components.post',['Arusuarios'=>$Arusuarios, 'post'=>$c, 'Arcomentarios'=>$Arcomentarios])                    
+                    @endcomponent
+                    </br>
+                     
+                @endforeach
+            @endif
+        </div>
+
+
     </div>
 </div>
 @endsection

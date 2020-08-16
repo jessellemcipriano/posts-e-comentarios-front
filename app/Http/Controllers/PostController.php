@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use illuminate\Support\Facades\Auth;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -29,13 +29,22 @@ class PostController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+
+        
+        if(isset ($request->conteudo)){
+        $id= Auth::user()->id;
+        $Post= new Post;
+        $Post->conteudo = $request->conteudo;
+        $Post->user_id = $id;
+        $Post->save();}
+        return redirect()->route('home');
+        
     }
 
     /**
